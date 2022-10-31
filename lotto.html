@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로또번호 생성기</title>
+  <style>
+    /* 스타일은 수정하지 않습니다. */
+    .ball {
+      width: 10rem;
+      height: 10rem;
+      margin: .5rem;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 10rem;
+      font-size: xx-large;
+      font-weight: bold;
+      color: white;
+    }
+    .ball-container {
+      display: flex;
+    }
+  </style>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+<body >
+<div class="d-flex align-items-center flex-column justify-content-center margin  padding mt-5">
+  <div class="d-flex justify-content-center ">
+    <h1>로또 추천 번호</h1>
+  </div>
+  <div class="d-flex justify-content-center">
+    <button id="lotto-btn" class = 'btn btn-danger'>생성</button>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div id="result"></div>
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script>
+    const ballbtn = document.querySelector('#lotto-btn')
+    ballbtn.addEventListener('click', function(event){
+
+      // 공이 들어갈 컨테이너 생성
+      const ballcontainer = document.createElement('div')
+      ballcontainer.classList.add('ball-container')
+
+      // 랜덤한 숫자 받기
+      const numbers = _.sampleSize(_.range(1,46), 6)
+      numbers.sort(function (a, b) {
+        return a - b;
+      });
+
+      // 공만들기
+      numbers.forEach((ans) => {
+        const ball = document.createElement('div')
+        ball.classList.add('ball')
+        ball.innerText = ans
+        if (0<=ans && ans<10) {
+          ball.style.backgroundColor = 'gold'
+        }
+        else if (10<=ans && ans<20) {
+          ball.style.backgroundColor = 'royalblue'
+        }
+        else if (20<=ans && ans<30) {
+          ball.style.backgroundColor = 'crimson'
+        }
+        else if (30<=ans && ans<40) {
+          ball.style.backgroundColor = 'dimgray'
+        }
+        else if (40<=ans && ans<46) {
+          ball.style.backgroundColor = 'darkgreen'
+        }
+        ballcontainer.appendChild(ball)
+      }
+      )
+      // 공 컨테이너는 결과 영역의 자식으로 넣기
+      const resultball = document.querySelector('#result')
+      resultball.appendChild(ballcontainer)
+
+    })
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+</body>
+</html>
